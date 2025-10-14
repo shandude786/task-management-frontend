@@ -1,0 +1,33 @@
+# .gitignore (in root directory)
+
+# Environment variables
+.env
+*.env
+!.env.example
+
+# Dependencies
+**/node_modules/
+**/dist/
+**/.next/
+
+# Logs
+**/logs/
+**/*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Build files
+**/build/
+**/.turbo/
+
+# Database
+*.sql
+*.sqlite

@@ -1,35 +1,35 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import Link from 'next/link';
-import api from '@/lib/api';
-import { TaskStatus } from '@/types/task';
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
+import api from "@/lib/api";
+import { TaskStatus } from "@/types/task";
 
 export default function NewTask() {
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
   const [status, setStatus] = useState<TaskStatus>(TaskStatus.TODO);
-  const [dueDate, setDueDate] = useState('');
-  const [error, setError] = useState('');
+  const [dueDate, setDueDate] = useState("");
+  const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError('');
+    setError("");
     setIsLoading(true);
-
+    console.log("Add Console");
     try {
-      await api.post('/tasks', {
+      await api.post("/tasks", {
         title,
         description,
         status,
         dueDate: new Date(dueDate).toISOString(),
       });
-      router.push('/tasks');
+      router.push("/tasks");
     } catch (err: any) {
-      setError(err.response?.data?.message || 'Failed to create task');
+      setError(err.response?.data?.message || "Failed to create task");
     } finally {
       setIsLoading(false);
     }
@@ -60,7 +60,9 @@ export default function NewTask() {
         </div>
 
         <div className="bg-white rounded-lg shadow p-6">
-          <h2 className="text-2xl font-bold text-gray-900 mb-6">Create New Task</h2>
+          <h2 className="text-2xl font-bold text-gray-900 mb-6">
+            Create New Task
+          </h2>
 
           {error && (
             <div className="mb-4 rounded-md bg-red-50 p-4">
@@ -70,7 +72,10 @@ export default function NewTask() {
 
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
-              <label htmlFor="title" className="block text-sm font-medium text-gray-700">
+              <label
+                htmlFor="title"
+                className="block text-sm font-medium text-gray-700"
+              >
                 Title *
               </label>
               <input
@@ -84,7 +89,10 @@ export default function NewTask() {
             </div>
 
             <div>
-              <label htmlFor="description" className="block text-sm font-medium text-gray-700">
+              <label
+                htmlFor="description"
+                className="block text-sm font-medium text-gray-700"
+              >
                 Description *
               </label>
               <textarea
@@ -98,7 +106,10 @@ export default function NewTask() {
             </div>
 
             <div>
-              <label htmlFor="status" className="block text-sm font-medium text-gray-700">
+              <label
+                htmlFor="status"
+                className="block text-sm font-medium text-gray-700"
+              >
                 Status *
               </label>
               <select
@@ -109,13 +120,20 @@ export default function NewTask() {
                 onChange={(e) => setStatus(e.target.value as TaskStatus)}
               >
                 <option value={TaskStatus.TODO}>{TaskStatus.TODO}</option>
-                <option value={TaskStatus.IN_PROGRESS}>{TaskStatus.IN_PROGRESS}</option>
-                <option value={TaskStatus.COMPLETED}>{TaskStatus.COMPLETED}</option>
+                <option value={TaskStatus.IN_PROGRESS}>
+                  {TaskStatus.IN_PROGRESS}
+                </option>
+                <option value={TaskStatus.COMPLETED}>
+                  {TaskStatus.COMPLETED}
+                </option>
               </select>
             </div>
 
             <div>
-              <label htmlFor="dueDate" className="block text-sm font-medium text-gray-700">
+              <label
+                htmlFor="dueDate"
+                className="block text-sm font-medium text-gray-700"
+              >
                 Due Date and Time *
               </label>
               <input
@@ -134,7 +152,7 @@ export default function NewTask() {
                 disabled={isLoading}
                 className="flex-1 bg-primary-600 text-white px-4 py-2 rounded-md hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 disabled:bg-gray-400 disabled:cursor-not-allowed"
               >
-                {isLoading ? 'Creating...' : 'Create Task'}
+                {isLoading ? "Creating..." : "Create Task"}
               </button>
               <Link
                 href="/tasks"
